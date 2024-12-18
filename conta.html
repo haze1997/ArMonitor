@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Conta | ArMonitor</title>
+        
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+        <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha256-3edrmyuQ0w65f8gfBsqowzjJe2iM6n0nKciPUp8y+7E=" crossorigin="anonymous"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+            
+            <!-- MATERIAL DESIGN ICONIC FONT -->
+        <link rel="stylesheet" href="recursos/fonts/material-design-iconic-font/css/material-design-iconic-font.min.css">
+                
+                <!-- STYLE CSS -->
+        <link rel="stylesheet" href="recursos/css/style.css">
+        <!--
+        <script src="https://www.gstatic.com/firebasejs/11.1.0/firebase-app.js"></script>
+        <script src="https://www.gstatic.com/firebasejs/11.1.0/firebase-auth.js"></script>
+        <script src="https://www.gstatic.com/firebasejs/11.1.0/firebase-database.js"></script>
+        <script src="https://www.gstatic.com/firebasejs/11.1.0/firebase-storage.js"></script>-->
+
+        <script src="https://www.gstatic.com/firebasejs/4.3.0/firebase.js"></script>
+    </head>
+
+    <body>
+        <div class="wrapper" style="background-image: url('recursos/images/anime_bright_sky.jpg');">
+            <div class="inner">
+                <div class="image-holder">
+                    <img src="recursos/images/girl_sit.png">
+                </div>
+                <form action="">
+                    <h3>Configurações da Conta</h3>
+                    <div class="form-group">
+                        <input id="firstName" type="text" placeholder="Nome" class="form-control">
+                        <input id="lastName" type="text" placeholder="Sobrenome" class="form-control">
+                        
+                    </div>
+                    <div class="form-wrapper">
+                        <select name="" id="uf" class="form-control">
+                            <option value="" disabled selected>Estado</option>
+                            <option	value="AC">Acre</option>
+                            <option	value="AL">Alagoas</option>
+                            <option	value="AP">Amapá</option>
+                            <option	value="AM">Amazonas</option>
+                            <option	value="BA">Bahia</option>
+                            <option	value="CE">Ceará</option>
+                            <option	value="DF">Distrito Federal</option>
+                            <option	value="ES">Espírito Santo</option>
+                            <option	value="GO">Goiás</option>
+                            <option	value="MA">Maranhão</option>
+                            <option	value="MT">Mato Grosso</option>
+                            <option	value="MS">Mato Grosso do Sul</option>
+                            <option	value="MG">Minas Gerais</option>
+                            <option	value="PA">Pará</option>
+                            <option	value="PB">Paraíba</option>
+                            <option	value="PR">Paraná</option>
+                            <option	value="PE">Pernambuco</option>
+                            <option	value="PI">Piauí</option>
+                            <option	value="RJ">Rio de Janeiro</option>
+                            <option	value="RN">Rio Grande do Norte</option>
+                            <option	value="RS">Rio Grande do Sul</option>
+                            <option	value="RO">Rondônia</option>
+                            <option	value="RR">Roraima</option>
+                            <option	value="SC">Santa Catarina</option>
+                            <option	value="SP">São Paulo</option>
+                            <option	value="SE">Sergipe</option>
+                            <option value="TO">Tocantins</option>
+                        </select>
+                        <i class="zmdi zmdi-caret-down" style="font-size: 17px;"></i>
+                    </div>
+                    <div class="form-wrapper">
+                        <input id="phone" type="number" placeholder="Telefone" class="form-control">
+                        <i class="zmdi zmdi-table-mac"></i>
+                    </div>
+                    <div class="form-wrapper">
+                        <select name="" id="gender" class="form-control">
+                            <option value="" disabled selected>Gênero</option>
+                            <option	value="Masculino">Masculino</option>
+                            <option	value="Feminino">Feminino</option>
+                            <option	value="Outro">Outro</option>
+                        </select>
+                        <i class="zmdi zmdi-caret-down" style="font-size: 17px;"></i>
+                    </div>
+                    <div class="form-wrapper">
+                        <input id="address" type="text" placeholder="Endereço" class="form-control">
+                        <i class="zmdi zmdi-pin"></i>
+                    </div>
+                    <div class="form-wrapper">
+                        <input id="cpf" type="number" placeholder="CPF" class="form-control">
+                        <i class="zmdi zmdi-account-o"></i>
+                    </div>
+                    <div class="form-group container-login100-form-btn">
+                        <button id="btn-update" type="button">
+                            Salvar
+                            <i class="zmdi zmdi-arrow-right"></i>
+                        </button>
+                    </div>
+                    <div class="w-full text-center p-t-27 p-b-239">
+                        <a class="text-dark" id="btn" href="dashboard.html">
+                            Ir para Dashboard
+                        </a>
+                    </div>
+                    <div class="w-full text-center p-t-27 p-b-239">
+                        <a class="text-dark" id="btn-logout" href="#">
+                            Desconectar
+                        </a>
+                    </div>
+                    
+        
+                </form>
+            </div>
+        </div>
+
+        <script src="js/index.js"></script>
+        <script>
+            
+        </script>
+        <script>
+            firebase.auth().onAuthStateChanged(function(user){
+                if(!user){
+                    window.location.href = "login.html";
+                }else{
+                    var uid = firebase.auth().currentUser.uid;
+                    firebase.database().ref('usuario/'+uid).once('value').then(function(snapshot) {
+                        var userData = snapshot.val();
+                        $("#firstName").val(userData.nome);
+                        $("#lastName").val(userData.sobrenome);
+                        $("#uf").val(userData.uf);
+                        $("#phone").val(userData.telefone);
+                        $("#gender").val(userData.genero);
+                        $("#address").val(userData.endereco);
+                        $("#cpf").val(userData.cpf);
+                    });
+                }
+            });
+        </script>
+    </body>
+</html>

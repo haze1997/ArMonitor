@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Dashboard | ArMonitor</title>
+        <!--<script src="https://www.gstatic.com/firebasejs/11.1.0/firebase-app.js" type="module"></script>
+        <script src="https://www.gstatic.com/firebasejs/11.1.0/firebase-auth.js" type="module"></script>
+        <script src="https://www.gstatic.com/firebasejs/11.1.0/firebase-database.js" type="module"></script>
+        <script src="https://www.gstatic.com/firebasejs/11.1.0/firebase-storage.js" type="module"></script>-->
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+
+        <style type="text/css">
+            .data-container{
+                display: flex;
+                justify-content: space-between;
+                width: 50%;
+                margin: 20px auto;
+                padding: 20px;
+                background-color: #FFF;
+                box-shadow: 0 2px 20px rgba(0, 0, 0, 0.1);
+                border-radius: 10px;
+            }
+            .data-item{
+                text-align: center;
+            }
+            .data-item h2{
+                font-size: 24px;
+                font-weight: bold;
+                margin-bottom: 10px;
+            }
+            .data-item p{
+                font-size: 42px;
+                font-weight: bold;
+            }
+        </style>
+
+        <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha256-3edrmyuQ0w65f8gfBsqowzjJe2iM6n0nKciPUp8y+7E=" crossorigin="anonymous"></script>   
+            
+
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+
+
+        <script src="https://www.gstatic.com/firebasejs/4.3.0/firebase.js"></script>
+
+        <script>
+            
+        </script>
+    </head>
+    
+    <body class="h-100 bg-light">
+
+        <nav class="navbar navbar-expand-lg bg-dark text-white">
+            <div class="container-fluid">
+                <ul class="nav navbar-nav">
+                    <li class="active">
+                        <a class="navbar-brand" style="color: whitesmoke; text-decoration-style: wavy;" href="#">
+                            ArMonitor
+                        </a>
+                    </li>
+                    <li>
+                        <a class="nav-link" onclick="abrirAddSonda()" style="color: whitesmoke; text-decoration-style: wavy;" href="#">
+                            <span style="color: white;">Solicitar sonda</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a class="nav-link" onclick="abrirExcluirSonda()"  style="color: whitesmoke; text-decoration-style: wavy;" href="#" id="excluirSondaAbrir">
+                            <span style="color: white;">Excluir sonda</span>
+                        </a>
+                    </li>
+                </ul>
+
+                <div class="dropdown navbar-right">
+                    <button id="opcao" class="btn btn-light dropdown-toggle bg-dark text-white" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        Opções
+                    </button>
+
+                    <div class="dropdown-menu" aria-labelledby="opcao">
+                        <a class="dropdown-item" id="btn" href="conta.html">
+                            Conta
+                        </a>
+                        <a class="dropdown-item" id="btn-logout" href="#">
+                            Sair
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+        </nav>
+        
+        <div class="row h-100 bg-light">
+            <div class="col-lg-0 bg-secondary">
+                <ul class="nav flex-column">
+
+                </ul>
+
+            </div>
+
+            <div class="col-lg-12">
+                <div class="container" id="container">
+                    <h2 id="mensagem_boas_vindas"></h2>
+                    <div id="sonda">
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        
+        
+        <!-- Modal -->
+        <div class="modal fade" id="modalExSonda" tabindex="-1" aria-labelledby="ModalLabelExSonda" aria-hidden="true">
+            <div class="modal-dialog">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h1 class="modal-title fs-5" id="ModalLabelExSonda">Escolha uma sonda para excluir</h1>
+                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" onclick="fecharExcluirSonda()"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="form-wrapper">
+                        <select name="" id="sondas" class="form-control">
+                            <option value="" disabled selected>Sonda</option>
+                        </select>
+                        <i class="zmdi zmdi-caret-down" style="font-size: 17px;"></i>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                  <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" onclick="fecharExcluirSonda()">Fechar</button>
+                  <button type="button" class="btn btn-primary" onclick="ExcluirSonda()">Excluir</button>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="modal fade" id="modalAddSonda" tabindex="-1" aria-labelledby="ModalLabelAddSonda" aria-hidden="true">
+            <div class="modal-dialog">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h1 class="modal-title fs-5" id="ModalLabelAddSonda">Escolha um nome para a nova sonda</h1>
+                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" onclick="fecharAddSonda()"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="form-wrapper">
+                        <input id="nome_sonda" type="text" placeholder="Nome da Sonda" class="form-control">
+                        <i class="zmdi zmdi-pin"></i>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                  <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" onclick="fecharAddSonda()">Fechar</button>
+                  <button type="button" class="btn btn-primary" onclick="AdicionarSonda()">Adicionar</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        
+        <script src="js/index.js"></script>
+        
+        <script>
+            firebase.auth().onAuthStateChanged(function(user){
+                if(!user){
+                    window.location.href = "login.html";
+                }else{
+                    var usuarioID = firebase.auth().currentUser.uid;
+                    firebase.database().ref('usuario/'+usuarioID).once('value').then(function(snapshot){
+                        if(!snapshot.val()){
+                            window.location.href = "conta.html";
+                        }
+                    });
+                    var raizRef = firebase.database().ref().child("usuario");
+                    var IDusuario = firebase.auth().currentUser.uid;
+                    var usuarioRef = raizRef.child(IDusuario);
+                    var nome = usuarioRef.child("nome");
+                    var sonda = usuarioRef.child("sonda");
+                    //var sonda1 = sonda.child("sonda1");
+                    nome.once('value').then(function(getNome){
+                        var name = getNome.val();
+                        $("#mensagem_boas_vindas").html("Olá, " + name + ". Seja bem-vindo(a)!");
+                    });
+
+                    sonda.on('value', function(elemento){
+                        
+                        
+                        if(elemento.val()){
+                            var exibe_sonda = '';
+                            var mostra_sonda = '<option value="" disabled selected>Sonda</option>';
+                            elemento.forEach(function(valor) {
+                                var chave_elemento = valor.key;
+                                var status_qualidade_ar = 'Boa';
+                                if(valor.val() > 560){
+                                    status_qualidade_ar = 'Ruim'
+                                }else{
+                                    status_qualidade_ar = 'Boa';
+                                }
+                                exibe_sonda = exibe_sonda + '<div class="data-container"><div class="data-item"><h2>Sonda</h2><p>'+ chave_elemento +'</p></div><div class="data-item"><h2>Qualidade do Ar</h2><p>'+valor.val()+' ('+ status_qualidade_ar +')</p></div></div>';
+                                mostra_sonda = mostra_sonda + '<option	value="'+ chave_elemento + '">'+ chave_elemento +'</option>';
+                            });
+                            $("#sonda").html(exibe_sonda);
+                            $("#sondas").html(mostra_sonda);
+                        }else{
+                            $("#sonda").html('<div class="data-container"><h3>Nenhuma sonda encontrada!</h3></div>');
+                            $("#sondas").html('<option value="" disabled selected>Nenhuma sonda encontrada!</option>');
+                        }
+                    });
+                }
+            });
+        </script>
+        <script>
+            
+            function abrirExcluirSonda(){
+                $('#modalExSonda').modal('show');
+            }
+            function fecharExcluirSonda(){
+                $('#modalExSonda').modal('hide');
+            }
+            
+            function abrirAddSonda(){
+                $('#modalAddSonda').modal('show');
+            }
+            function fecharAddSonda(){
+                $('#modalAddSonda').modal('hide');
+            }
+            function ExcluirSonda(){
+                var sonda_selecionada = $("#sondas").val();
+                if(sonda_selecionada != null){
+                    var raizRef = firebase.database().ref().child("usuario");
+                    var IDusuario = firebase.auth().currentUser.uid;
+                    var userRef = raizRef.child(IDusuario);
+                    var sonda_root = userRef.child("sonda");
+                    var sonda_escolhida = sonda_root.child(sonda_selecionada);
+                    sonda_escolhida.remove().then(function() {
+                        window.alert("Sonda removida com sucesso!")
+                    })
+                    .catch(function(error) {
+                        window.alert("Erro ao remover: " + error.message)
+                    });
+                }else{
+                    window.alert("Nenhuma sonda selecionada!");
+                }
+            }
+
+            function AdicionarSonda(){
+                var nome_sonda = $("#nome_sonda").val();
+                if(nome_sonda != ""){
+                    var rootRef = firebase.database().ref().child("usuario");
+                    var userID = firebase.auth().currentUser.uid;
+                    var userRef = rootRef.child(userID);
+                    var path_sonda = userRef.child("sonda");
+                    path_sonda.child(nome_sonda).set(0, function(error){
+                        if(error){
+                            var errorCode = error.code;
+                            var errorMessage = error.message;
+
+                            console.log(errorCode);
+                            console.log(errorMessage);
+                            window.alert("Message: " + errorMessage);
+                        }else{
+                            window.alert("Sonda adicionada com sucesso!");
+                        }
+                    });
+                }else{
+                    window.alert("Preencha o nome da sonda!");
+                }
+                
+            }
+        </script>
+    </body>
+</html>

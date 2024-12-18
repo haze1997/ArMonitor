@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>ArMonitor</title>
+        
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+        <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha256-3edrmyuQ0w65f8gfBsqowzjJe2iM6n0nKciPUp8y+7E=" crossorigin="anonymous"></script>   
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+        
+            <!-- MATERIAL DESIGN ICONIC FONT -->
+        <link rel="stylesheet" href="recursos/fonts/material-design-iconic-font/css/material-design-iconic-font.min.css">
+                
+                <!-- STYLE CSS -->
+        <link rel="stylesheet" href="recursos/css/style.css">
+
+        <!--<script src="https://www.gstatic.com/firebasejs/11.1.0/firebase-app-compat.js" type="module"></script>
+        <script src="https://www.gstatic.com/firebasejs/11.1.0/firebase-auth-compat.js" type="module"></script>
+        <script src="https://www.gstatic.com/firebasejs/11.1.0/firebase-database-compat.js" type="module"></script>
+        <script src="https://www.gstatic.com/firebasejs/11.1.0/firebase-storage-compat.js" type="module"></script>-->
+        
+        <script src="https://www.gstatic.com/firebasejs/4.3.0/firebase.js"></script>
+    </head>
+
+    <body>
+        <div class="wrapper" style="background-image: url('recursos/images/zelda_breath.jpg');">
+            <div class="inner">
+                
+                <div style="max-width: 350px;">
+                    <h2 style="margin-left: auto;">ArMonitor</h2>
+                    <p style="margin-top: 25px;">Uma empresa focada em trazer soluções tecnológicas para monitorar a qualidade do ar e consequentemente melhorar a qualidade de vida e segurança dos seus clientes. Casa tenha alguma dúvida ou sugestão <a href="https://api.whatsapp.com/send?phone=5548996330288&text=Olá, tenho uma dúvida." target="_blank">clique aqui</a>. Caso queira se cadastrar ou logar clique em um dos links abaixo.<br /><br />Saudações,<br /><b>ArMonitor</b></p>
+                    <div class="w-full text-center p-t-27 p-b-239" style="margin-top: 84%;">
+                        <span class="text-muted">
+                            Tem conta?
+                        </span>
+                        <a href="login.html" class="text-dark">
+                            Faça o login
+                        </a>
+                    </div>
+    
+                    <div class="w-full text-center">
+                        <a href="cadastro.html" class="text-dark">
+                            Ainda não tem uma conta? Cadastre-se aqui
+                        </a>
+                    </div>
+                </div>
+                <div class="image-holder" style="display: block; margin-left: auto;">
+                    <img src="recursos/images/ArMonitor2.png">
+                </div>
+                <!--<h3>Login</h3>
+                <div class="form-wrapper">
+                    <input id="email" type="email" placeholder="Endereço de Email" class="form-control">
+                    <i class="zmdi zmdi-email"></i>
+                </div>
+                <div class="form-wrapper">
+                    <input id="password" type="password" placeholder="Senha" class="form-control">
+                    <i class="zmdi zmdi-lock"></i>
+                </div>
+                <div class="form-group container-login100-form-btn">
+                    <button id="btn-login" type="button">
+                        Login
+                        <i class="zmdi zmdi-arrow-right"></i>
+                    </button>
+                </div>
+                <div class="w-full text-center p-t-27 p-b-239">
+                    <span class="text-muted">
+                        Esqueceu
+                    </span>
+                    <a href="recuperarSenha.html" class="text-dark">
+                        a senha?
+                    </a>
+                </div>
+
+                <div class="w-full text-center" style="margin-top: 66%; font-size: 15px;">
+                    <a href="cadastro.html" class="text-dark">
+                        Não possui uma conta? Cadastre-se
+                    </a>
+                </div>-->
+                
+            </div>
+        </div>
+    
+        
+        <script src="js/index.js"></script>
+        <script>
+            firebase.auth().onAuthStateChanged(function(user){
+                if(user){
+                    var userID = firebase.auth().currentUser.uid;
+                    firebase.database().ref('usuario/' + userID).once('value').then(function(snapshot){
+                        if(snapshot.val()){
+                            window.location.href = "dashboard.html";
+                        }else{
+                            window.location.href = "conta.html";
+                        }
+                    });
+                }
+            });
+        </script>
+    </body>
+</html>
